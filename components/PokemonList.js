@@ -38,7 +38,6 @@ return (
         onEndReachedThreshold={0.5}
         renderItem={({ item }) => (
             <PokemonDetails name={item.name} url={item.url} />
-            // <Text style={styles.text}>{item.url}</Text>
         )}
         keyExtractor={(item) => item.name}
     />

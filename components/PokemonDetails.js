@@ -3,26 +3,15 @@ import { StyleSheet, View, FlatList, Text, Image } from "react-native";
 import axios from "axios";
 
 export default function PokemonList(name, url) {
-
-    // console.log(name.url)
-    // console.log(name.name);
-
     const [PokemonDetails, setPokemonDetails] = useState([]);
     const [PokemonImg, setPokemonImg] = useState([]);
-    // const [nextPage, setNextPage] = useState(null);
 
     useEffect(() => {
-        // console.log(name);
-        // console.log("hello");
-        // console.log(url);
         getPokemonDetails = async (url) => {
-            console.log(url)
             try {
                 const response = await axios.get(url);
-                console.log(response.data.sprites.front_default)
                 setPokemonDetails(response.data);
                 setPokemonImg(response.data.sprites.front_default);
-                // console.log(response.data);
             } catch (error) {
                 console.error(error);
             }
@@ -31,29 +20,33 @@ export default function PokemonList(name, url) {
     }, []);
 
     return (
-        <View style={styles.content}>
-            {/* <Text style={styles.text}>{ this.name }</Text> */}
-            <Text style={styles.text}>{PokemonDetails.name}</Text>
-            <Text style={styles.text}>{PokemonImg}</Text>
-            {/* <Image
-                source={{uri: {PokemonImg}}}
-                style={{width: 40, height: 40}}
-            /> */}
+        <View style={styles.item}>
+            <Text style={styles.Text}>{PokemonDetails.name}</Text>
+            {PokemonDetails.sprites && PokemonDetails.sprites.front_default ? (
+                <Image style={styles.Logo} source={{ uri: PokemonDetails.sprites.front_default }} />
+            ) : (
+                <Image style={styles.Logo} source={require('../assets/pokemonPlaceholder.gif')} />
+            )}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    content: {
-        // display: 'flex',
-        width: '50%',
-        height: '100%',
+    item: {
+        width: '48%',
+        margin: '1%',
+        minHeight: 200,
+        padding: 20,
         backgroundColor: 'red',
     },
-    // text: {
-    //     fontSize: 30,
-    //     padding: 140,
-    //     textAlign: "center",
-    //     backgroundColor: 'orange',
-    // },
+    Logo: {
+        minHeight: 120,
+        width: '100%',
+    },
+    text: {
+        fontSize: 30,
+        padding: 140,
+        textAlign: "center",
+        backgroundColor: 'orange',
+    },
 });

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, map } from "react";
 import { StyleSheet, View, FlatList, Text, Image } from "react-native";
 import axios from "axios";
 
@@ -17,11 +17,24 @@ export default function PokemonList(name, url) {
             }
         };
         getPokemonDetails(name.url);
+        // console.log(PokemonDetails.types[0].type.name)
     }, []);
 
     return (
         <View style={styles.item}>
-            <Text style={styles.Text}>{PokemonDetails.name}</Text>
+            <View style={styles.text_container}>
+                <Text style={styles.text}>{PokemonDetails.name}</Text>
+                {/* <Text style={styles.text}>{PokemonDetails.types[0].type.name}</Text> */}
+            </View>
+        {/* <Text style={styles.text}>{PokemonDetails.types}</Text> */}
+            {/* {PokemonDetails.types.map((type, index) => (
+                <Text key={index}>{type.name}</Text>
+            ))} */}
+            <View>
+                {PokemonDetails.types.map((type) => (
+                <li key={type.type.name}>{type.type.name}</li>
+                ))}
+            </View>
             {PokemonDetails.sprites && PokemonDetails.sprites.front_default ? (
                 <Image style={styles.Logo} source={{ uri: PokemonDetails.sprites.front_default }} />
             ) : (
@@ -33,20 +46,36 @@ export default function PokemonList(name, url) {
 
 const styles = StyleSheet.create({
     item: {
-        width: '48%',
-        margin: '1%',
-        minHeight: 200,
-        padding: 20,
+        marginTop: 30,
+        marginBottom: 20,
         backgroundColor: 'red',
+        display: 'flex',
+        flexDirection: 'row',
+        position: 'relative',
+        height: 200,
+        zIndex: 0,
+    },
+    text_container: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '50%',
+        backgroundColor: 'green',
     },
     Logo: {
-        minHeight: 120,
-        width: '100%',
+        height: 200,
+        width: 200,
+        position: 'absolute',
+        right: 20,
+        zIndex: 1,
+        bottom: 0,
+        backgroundColor: 'blue',
     },
     text: {
         fontSize: 30,
-        padding: 140,
         textAlign: "center",
-        backgroundColor: 'orange',
+        color: 'black',
+        // fontFamily: 'pokemon_pixel_font',
     },
 });

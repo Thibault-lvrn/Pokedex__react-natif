@@ -33,7 +33,6 @@ return (
         style={styles.list}
         contentContainerStyle={styles.listWrapper}
         data={pokemon}
-        numColumns={2}
         onEndReached={() => getpokemon(nextPage)}
         onEndReachedThreshold={0.5}
         renderItem={({ item }) => (
@@ -47,23 +46,12 @@ return (
 
 const styles = StyleSheet.create({
     content: {
-        display: 'flex',
+        // display: 'flex',
         width: '100%',
-    },
-    text: {
-        fontSize: 30,
-        padding: 140,
-        textAlign: "center",
-        backgroundColor: 'orange',
     },
     list: {
         backgroundColor: '#FFB7A7',
         margin: 10,
-    },
-    listWrapper: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'blue', 
-        margin: 10,
+        zIndex: 0,
     },
 });

@@ -30,11 +30,11 @@ export default function PokemonList(name, url) {
             {/* {PokemonDetails.types.map((type, index) => (
                 <Text key={index}>{type.name}</Text>
             ))} */}
-            <View>
+            {/* <View>
                 {PokemonDetails.types.map((type) => (
                 <li key={type.type.name}>{type.type.name}</li>
                 ))}
-            </View>
+            </View> */}
             {PokemonDetails.sprites && PokemonDetails.sprites.front_default ? (
                 <Image style={styles.Logo} source={{ uri: PokemonDetails.sprites.front_default }} />
             ) : (
@@ -48,12 +48,12 @@ const styles = StyleSheet.create({
     item: {
         marginTop: 30,
         marginBottom: 20,
-        backgroundColor: 'red',
         display: 'flex',
         flexDirection: 'row',
         position: 'relative',
         height: 200,
         zIndex: 0,
+        backgroundColor: '#f2f2f2',
     },
     text_container: {
         display: 'flex',
@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '50%',
-        backgroundColor: 'green',
     },
     Logo: {
         height: 200,
@@ -70,7 +69,6 @@ const styles = StyleSheet.create({
         right: 20,
         zIndex: 1,
         bottom: 0,
-        backgroundColor: 'blue',
     },
     text: {
         fontSize: 30,

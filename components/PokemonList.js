@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     list: {
-        backgroundColor: '#FFB7A7',
         margin: 10,
         zIndex: 0,
     },

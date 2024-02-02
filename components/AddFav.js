@@ -4,8 +4,6 @@ import { View, TouchableOpacity, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
 const PokemonButton = ({ pokemonData }) => {
   const [isButtonActive, setIsButtonActive] = useState(false);
   const [pokemonId, setPokemonId] = useState(null); // Ajoutez un état pour stocker l'id du Pokémon
@@ -80,12 +78,6 @@ const PokemonButton = ({ pokemonData }) => {
           setisTeamFull(true);
         }
       }
-
-      // Mettre à jour l'état du bouton
-      
-      // } else {
-      //   console.warn('Impossible d\'ajouter plus de 6 Pokémon à l\'équipe.');
-      // }
     } catch (error) {
       console.error('Erreur lors de la gestion du clic sur le bouton', error);
     }

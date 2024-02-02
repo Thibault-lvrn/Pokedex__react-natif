@@ -6,6 +6,7 @@ import PokemonInfo from './components/PokemonInfo';
 import HomeScreen from './navigation/HomeScreen';
 import DetailScreen from './navigation/DetailScreen';
 import SearchScreen from './navigation/DetailScreen';
+import PokemonTeam from './components/PokemonTeam';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -26,8 +27,8 @@ function HomeStackNavigation() {
 function PokemonStackNavigation() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="PokemonScreen" component={PokemonScreen} />
-      <Stack.Screen name="PokemonInfo" component={PokemonInfo} />
+      <Stack.Screen name="Pokemon list" component={PokemonScreen} />
+      <Stack.Screen name="Pokemon Info" component={PokemonInfo} />
     </Stack.Navigator>
   );
 }
@@ -77,7 +78,7 @@ export default function App() {
           />
         <Tab.Screen 
           name="Pokedex" 
-          component={SearchScreen}
+          component={PokemonTeam}
           options={{
             tabBarLabel: 'Team',
             tabBarIcon: ({ color }) => (

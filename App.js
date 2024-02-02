@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import PokemonList from './components/PokemonList';
+import PokemonScreen from './navigation/PokemonScreen';
+import PokemonInfo from './components/PokemonInfo';
 import HomeScreen from './navigation/HomeScreen';
 import DetailScreen from './navigation/DetailScreen';
 import SearchScreen from './navigation/DetailScreen';
@@ -13,11 +14,20 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function StackNavigation() {
+function HomeStackNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Details" component={DetailScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function PokemonStackNavigation() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="PokemonScreen" component={PokemonScreen} />
+      <Stack.Screen name="PokemonInfo" component={PokemonInfo} />
     </Stack.Navigator>
   );
 }
@@ -45,19 +55,9 @@ export default function App() {
           headerShown: false
         })} 
       >
-        <Tab.Screen
-          name="Main vue"
-          component={StackNavigation}
-          options={{
-            tabBarLabel: 'Home',
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="home" color={color} size={26} />
-            ),
-          }}
-          />
         <Tab.Screen 
           name="PokemonList" 
-          component={PokemonList}
+          component={PokemonStackNavigation}
           options={{
             tabBarLabel: 'Pokemon List',
             tabBarIcon: ({ color }) => (
@@ -79,12 +79,22 @@ export default function App() {
           name="Pokedex" 
           component={SearchScreen}
           options={{
-            tabBarLabel: 'Pokedex',
+            tabBarLabel: 'Team',
             tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="polaroid" color={color} size={26} />
+              <MaterialCommunityIcons name="star" color={color} size={26} />
             ),
           }} 
-          />
+        />
+        <Tab.Screen
+          name="Parameters"
+          component={HomeStackNavigation}
+          options={{
+            tabBarLabel: 'Parameters',
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="cog" color={color} size={26} />
+            ),
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );

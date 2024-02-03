@@ -1,41 +1,37 @@
-import React, { useState, useEffect, map } from "react";
-import { StyleSheet, View, FlatList, Text, Image, Button } from "react-native";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Text, Image } from "react-native";
 import TypeImage from "../assets/img/TypeImages";
-import {LinearGradient} from 'expo-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import StarButton from './AddFav';
 import SizeConverter from './SizeConverter';
 import WeightConverter from './WeightConverter';
-import GameVersion from './GameVersion';
 
 export default function PokemonList({ route }) {
     const { itemUrl } = route.params;
     const [PokemonDetails, setPokemonDetails] = useState([]);
     const [PokemonImg, setPokemonImg] = useState('');
-    const imageNumber = 'grass';
 
     const determineStyle = () => {
         if (PokemonDetails && PokemonDetails.types) {
-          if (PokemonDetails.types.length === 1) {
-            const singleColor = TypeImage.GetColor(PokemonDetails.types[0].type.name);
-            return { ...styles.color_header, backgroundColor: singleColor };
-          } else if (PokemonDetails.types.length === 2) {
-            const color1 = TypeImage.GetColor(PokemonDetails.types[0].type.name);
-            const color2 = TypeImage.GetColor(PokemonDetails.types[1].type.name);
-            return {
-              ...styles.linearGradient,
-              colors: [color1, color2]
-            };
-          }
+            if (PokemonDetails.types.length === 1) {
+                const singleColor = TypeImage.GetColor(PokemonDetails.types[0].type.name);
+                return { ...styles.color_header, backgroundColor: singleColor };
+            } else if (PokemonDetails.types.length === 2) {
+                const color1 = TypeImage.GetColor(PokemonDetails.types[0].type.name);
+                const color2 = TypeImage.GetColor(PokemonDetails.types[1].type.name);
+                return {
+                    ...styles.linearGradient,
+                    colors: [color1, color2]
+                };
+            }
         }
         return styles.color_header;
-      };
+    };
 
     const getPokemonDetails = async (url) => {
         try {
-            const response = await axios.get(url);
-            setPokemonDetails(response.data);
-            setPokemonImg(response.data.sprites.other["official-artwork"].front_default);
+            setPokemonDetails(url.PokemonDetails);
+            setPokemonImg(url.PokemonDetails.sprites.other["official-artwork"].front_default);
         } catch (error) {
             console.log(error);
         }
@@ -51,67 +47,62 @@ export default function PokemonList({ route }) {
 
     return (
         <View style={styles.pokemon_fiche}>
-          {Array.isArray(determineStyle().colors) ? (
-            <LinearGradient
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              {...determineStyle()}
-              style={styles.color_header}
-            >
-            </LinearGradient>
-          ) : (
-            <View style={[determineStyle(), styles.color_header]}>
-            </View>
-          )}
-          {PokemonDetails && (
-            <>
-              <View style={styles.image_container}>
-                {PokemonImg ? (
-                  <Image style={styles.image} source={{ uri: PokemonImg }} />
-                ) : (
-                  <Image style={styles.image} source={require('../assets/pokemonPlaceholder.gif')} />
-                )}
-              </View>
-      
-              <View style={styles.text_container}>
-                <View style={styles.name_container}>
-                  <Text style={styles.text}>{PokemonDetails.name}</Text>
-                  <StarButton pokemonData={PokemonDetails} />
+            {Array.isArray(determineStyle().colors) ? (
+                <LinearGradient
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    {...determineStyle()}
+                    style={styles.color_header}
+                >
+                </LinearGradient>
+            ) : (
+                <View style={[determineStyle(), styles.color_header]}>
                 </View>
-      
-                <View style={styles.list}>
-                  {PokemonDetails.types && (
-                    PokemonDetails.types.map((item) => (
-                      <View key={item.type.name} style={styles.TypeContent}>
-                        <Text style={[styles.typeObject, { backgroundColor: TypeImage.GetColor(item.type.name) }]}>
-                          {item.type.name}
-                        </Text>
-                      </View>
-                    ))
-                  )}
-                </View>
-      
-                <View style={styles.info_container}>
-                  <View style={styles.info_content}>
-                    <SizeConverter style={styles.info_content_sup} sizeInDecimeters={PokemonDetails.height} />
-                    <Text style={styles.info_content_sub}>height</Text>
-                  </View>
-                  <View style={styles.separator}></View>
-                  {/* <View style={styles.info_content}>
-                    <GameVersion PokemonDetails={PokemonDetails} />
-                    <Text style={styles.info_content_sub}>1st game</Text>
-                  </View>
-                  <View style={styles.separator}></View> */}
-                  <View style={styles.info_content}>
-                    <WeightConverter style={styles.info_content_sup} weightInHectograms={PokemonDetails.weight} />
-                    <Text style={styles.info_content_sub}>Weight</Text>
-                  </View>
-                </View>
-              </View>
-            </>
-          )}
+            )}
+            {PokemonDetails && (
+                <>
+                    <View style={styles.image_container}>
+                        {PokemonImg ? (
+                            <Image style={styles.image} source={{ uri: PokemonImg }} />
+                        ) : (
+                            <Image style={styles.image} source={require('../assets/pokemonPlaceholder.gif')} />
+                        )}
+                    </View>
+
+                    <View style={styles.text_container}>
+                        <View style={styles.name_container}>
+                            <Text style={styles.text}>{PokemonDetails.name}</Text>
+                            <StarButton pokemonData={PokemonDetails} />
+                        </View>
+
+                        <View style={styles.list}>
+                            {PokemonDetails.types && (
+                                PokemonDetails.types.map((item) => (
+                                    <View key={item.type.name} style={styles.TypeContent}>
+                                        <Text style={[styles.typeObject, { backgroundColor: TypeImage.GetColor(item.type.name) }]}>
+                                            {item.type.name}
+                                        </Text>
+                                    </View>
+                                ))
+                            )}
+                        </View>
+
+                        <View style={styles.info_container}>
+                            <View style={styles.info_content}>
+                                <SizeConverter style={styles.info_content_sup} sizeInDecimeters={PokemonDetails.height} />
+                                <Text style={styles.info_content_sub}>height</Text>
+                            </View>
+                            <View style={styles.separator}></View>
+                            <View style={styles.info_content}>
+                                <WeightConverter style={styles.info_content_sup} weightInHectograms={PokemonDetails.weight} />
+                                <Text style={styles.info_content_sub}>Weight</Text>
+                            </View>
+                        </View>
+                    </View>
+                </>
+            )}
         </View>
-      );      
+    );
 }
 
 const styles = StyleSheet.create({

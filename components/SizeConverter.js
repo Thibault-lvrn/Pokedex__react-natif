@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
 
 const SizeConverter = ({ sizeInDecimeters }) => {
   // Convert decimeters to meters
@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: 'bold',
     color: '#1b1c1c',
-    // fontFamily: 'pokemon_pixel_font',
   }
 });
 

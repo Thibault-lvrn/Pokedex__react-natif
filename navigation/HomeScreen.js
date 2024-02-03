@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import { View, Text, Button } from 'react-native';
+import { View, Button, Image } from 'react-native';
 
 export default function HomeScreen({ navigation }) {
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={styles.text}>Home Screen</Text>
+            <View style={{ width: '100%', height: 135, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Image source={require('../assets/img/pokemon_logo.png')} style={{ width: '90%', height: '100%', objectFit: 'cover' }} />
+            </View>
             <Button
-                title="Go to Details"
-                onPress={() => navigation.navigate('Details')}
+                title=""
+                onPress={() => navigation.navigate('Pokemon list')}
             />
         </View>
     )

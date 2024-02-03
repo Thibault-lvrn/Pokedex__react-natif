@@ -7,7 +7,7 @@
     "icon": "./assets/img/pokemon_logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/img/loading_pikachu.gif",
+      "image": "./assets/img/loading_pikachu-test.gif",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

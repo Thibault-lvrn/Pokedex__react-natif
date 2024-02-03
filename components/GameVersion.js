@@ -1,9 +1,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
 
 const GameVersion = ({ PokemonDetails }) => {
-  // Convert hectograms to kilograms
   const GameVersion = PokemonDetails['game_indices'][0].version.name;
 
   return (
@@ -20,6 +19,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: 'bold',
     color: '#1b1c1c',
-    // fontFamily: 'pokemon_pixel_font',
   }
 });

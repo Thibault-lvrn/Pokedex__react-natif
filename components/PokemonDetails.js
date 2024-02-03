@@ -1,12 +1,12 @@
-import React, { useState, useEffect, map } from "react";
-import { StyleSheet, View, FlatList, Text, Image, Button, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
-export default function PokemonList({item}) {
+export default function PokemonList({ item }) {
     const [PokemonDetails, setPokemonDetails] = useState([]);
     const [PokemonImg, setPokemonImg] = useState('');
-    const navigation = useNavigation() 
+    const navigation = useNavigation()
 
     const getPokemonDetails = async (url) => {
         try {
@@ -19,21 +19,28 @@ export default function PokemonList({item}) {
     };
 
     useEffect(() => {
-        getPokemonDetails(item.url);
+        if (item.url) {
+            getPokemonDetails(item.url);
+        } else {
+            setPokemonDetails(item);
+            setPokemonImg(item.sprites.other["official-artwork"].front_default);
+            console.log(PokemonDetails.name)
+            return;
+        }
     }, []);
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('PokemonInfo', { itemUrl: item.url })}>
+        <TouchableOpacity onPress={() => navigation.navigate('Pokemon Info', { itemUrl: { PokemonDetails } })}>
             <View style={styles.item}>
                 <View style={styles.text_container}>
                     <Text style={styles.text}>{PokemonDetails.name}</Text>
                 </View>
-                
-                { PokemonImg ? (
+
+                {PokemonImg ? (
                     <Image style={styles.Logo} source={{ uri: PokemonImg }} />
-                    ) : (
-                        <Image style={styles.Logo} source={require('../assets/pokemonPlaceholder.gif')} />
-                        )}
+                ) : (
+                    <Image style={styles.Logo} source={require('../assets/pokemonPlaceholder.gif')} />
+                )}
             </View>
         </TouchableOpacity>
     );
@@ -60,10 +67,10 @@ const styles = StyleSheet.create({
         paddingLeft: 24,
     },
     button: {
-        paddingTop: 10,  
+        paddingTop: 10,
         paddingBottom: 10,
-        paddingLeft: 25,  
-        paddingRight: 25,  
+        paddingLeft: 25,
+        paddingRight: 25,
         marginTop: 20
     },
     Logo: {
@@ -79,6 +86,5 @@ const styles = StyleSheet.create({
         fontSize: 30,
         textAlign: "center",
         color: 'black',
-        // fontFamily: 'pokemon_pixel_font',
     },
 });

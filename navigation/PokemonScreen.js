@@ -7,13 +7,12 @@ export default function PokemonList(navigation) {
     const [pokemon, setPokemon] = useState([]);
     const [nextPage, setNextPage] = useState(null);
     const [isLoaded, setIsLoaded] = useState(true);
-    const url = "https://pokeapi.co/api/v2/pokemon?limit=10";
+    const url = "https://pokeapi.co/api/v2/pokemon?limit=16";
 
     useEffect(() => {
         getpokemon = async (url) => {
             if (isLoaded) {
                 setIsLoaded(false);
-                console.log(isLoaded)
                 try {
                     const response = await axios.get(url);
 
@@ -34,17 +33,16 @@ export default function PokemonList(navigation) {
     }, []);
 
     return (
-        <View style={styles.content}>
+        <View style={styles.list_container}>
             <FlatList
                 style={styles.list}
-                contentContainerStyle={styles.listWrapper}
+                columnWrapperStyle={styles.list_wrapper}
                 data={pokemon}
+                numColumns={2}
                 onEndReached={() => getpokemon(nextPage)}
                 onEndReachedThreshold={0.5}
                 renderItem={({ item }) => (
-                    <View>
-                        <PokemonDetails navigation={navigation} item={item} />
-                    </View>
+                    <PokemonDetails navigation={navigation} item={item} />
                 )}
                 keyExtractor={(item) => item.name}
             />
@@ -53,11 +51,16 @@ export default function PokemonList(navigation) {
 }
 
 const styles = StyleSheet.create({
-    content: {
-        width: '100%',
+    list_container: {
+        marginLeft: 20,
+        marginRight: 20,
+        // height: '100%',
     },
     list: {
-        margin: 10,
-        zIndex: 0,
+        marginBottom: 100,
+        maxHeight: '100%',
+    },
+    list_wrapper: {
+        justifyContent: 'space-between',
     },
 });

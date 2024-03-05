@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
 import PokemonScreen from './navigation/PokemonScreen';
 import PokemonInfo from './components/PokemonInfo';
 import DetailScreen from './navigation/DetailScreen';
-import SearchScreen from './navigation/DetailScreen';
+import SearchScreen from './navigation/SearchScreen';
 import PokemonTeam from './components/PokemonTeam';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -67,7 +66,7 @@ export default function App() {
                 name="Search" 
                 component={SearchScreen}
                 options={{
-                    tabBarLabel: 'Pokemon List',
+                    tabBarLabel: 'Search Pokemon',
                     tabBarIcon: ({ color }) => (
                     <MaterialCommunityIcons name="magnify" color={color} size={26} />
                     ),
@@ -98,12 +97,3 @@ export default function App() {
         </NavigationContainer>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});

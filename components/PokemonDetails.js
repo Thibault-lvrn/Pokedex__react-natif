@@ -8,6 +8,16 @@ export default function PokemonList({ item }) {
     const [PokemonImg, setPokemonImg] = useState('');
     const navigation = useNavigation()
 
+    useEffect(() => {
+        if (item.url) {
+            getPokemonDetails(item.url);
+        } else {
+            setPokemonDetails(item);
+            setPokemonImg(item.sprites.other["official-artwork"].front_default);
+            return;
+        }
+    }, []);
+
     const getPokemonDetails = async (url) => {
         try {
             const response = await axios.get(url);
@@ -18,73 +28,58 @@ export default function PokemonList({ item }) {
         }
     };
 
-    useEffect(() => {
-        if (item.url) {
-            getPokemonDetails(item.url);
-        } else {
-            setPokemonDetails(item);
-            setPokemonImg(item.sprites.other["official-artwork"].front_default);
-            console.log(PokemonDetails.name)
-            return;
-        }
-    }, []);
-
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('Pokemon Info', { itemUrl: { PokemonDetails } })}>
-            <View style={styles.item}>
-                <View style={styles.text_container}>
-                    <Text style={styles.text}>{PokemonDetails.name}</Text>
+        <View style={ styles.container }>
+            <TouchableOpacity onPress={() => navigation.navigate('Pokemon Info', { itemUrl: { PokemonDetails } })}>
+                <View style={[styles.item, styles.shadowProp]}>
+                    <View style={styles.image_container}>
+                        {PokemonImg ? (
+                            <Image style={styles.Logo} source={{ uri: PokemonImg }} />
+                        ) : (
+                            <Image style={styles.Logo} source={require('../assets/pokemonPlaceholder.gif')} />
+                        )}
+                    </View>
                 </View>
-
-                {PokemonImg ? (
-                    <Image style={styles.Logo} source={{ uri: PokemonImg }} />
-                ) : (
-                    <Image style={styles.Logo} source={require('../assets/pokemonPlaceholder.gif')} />
-                )}
+            </TouchableOpacity>
+            <View style={styles.text_container}>
+                <Text style={styles.text}>{PokemonDetails.name}</Text>
             </View>
-        </TouchableOpacity>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
+    container: {
+        width: '47%',
+        marginBottom: 10,
+    },
     item: {
-        marginTop: 30,
-        marginBottom: 20,
-        display: 'flex',
-        flexDirection: 'row',
-        position: 'relative',
-        height: 180,
-        zIndex: 0,
-        backgroundColor: '#e6e6e6',
-        borderRadius: 10,
+        backgroundColor: 'white',
+        borderRadius: 8,
+        paddingVertical: 25,
+        paddingHorizontal: 25,
+        width: '100%',
+        aspectRatio: '1/1',
+        marginVertical: 10,
     },
-    text_container: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        width: '50%',
-        paddingLeft: 24,
-    },
-    button: {
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 25,
-        paddingRight: 25,
-        marginTop: 20
+    shadowProp: {
+        shadowColor: '#171717',
+        shadowOffset: {width: -2, height: 4},
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
     },
     Logo: {
-        height: 150,
-        width: 200,
-        position: 'absolute',
-        right: 20,
-        zIndex: 1,
-        bottom: 0,
+        width: '100%',
+        height: '100%',
         objectFit: "contain"
     },
     text: {
-        fontSize: 30,
+        fontSize: 20,
         textAlign: "center",
         color: 'black',
+    },
+    image_container: {
+        width: '100%',
+        height: '100%',
     },
 });

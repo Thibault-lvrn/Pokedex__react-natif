@@ -11,6 +11,10 @@ export default function PokemonList({ route }) {
     const [PokemonDetails, setPokemonDetails] = useState([]);
     const [PokemonImg, setPokemonImg] = useState('');
 
+    useEffect(() => {
+        getPokemonDetails(itemUrl);
+    }, [itemUrl]);
+
     const determineStyle = () => {
         if (PokemonDetails && PokemonDetails.types) {
             if (PokemonDetails.types.length === 1) {
@@ -36,15 +40,7 @@ export default function PokemonList({ route }) {
             console.log(error);
         }
     };
-
-    const handleStarPress = () => {
-        console.log('Étoile pressée !');
-    };
-
-    useEffect(() => {
-        getPokemonDetails(itemUrl);
-    }, [itemUrl]);
-
+    
     return (
         <View style={styles.pokemon_fiche}>
             {Array.isArray(determineStyle().colors) ? (

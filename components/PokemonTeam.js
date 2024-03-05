@@ -5,13 +5,10 @@ import PokemonDetails from "../components/PokemonDetails";
 
 const PokemonList = () => {
     const [pokemonList, setPokemonList] = useState([]);
+    const [teamCount, setTeamCount] = useState(0);
 
     useEffect(() => {
         getPokemonTeam();
-    }, []);
-
-    useEffect(() => {
-        console.log('Page Pokedex est affichée');
     }, []);
 
     const getPokemonTeam = async () => {
@@ -22,44 +19,61 @@ const PokemonList = () => {
                 const arrayOfPokemonData = Object.values(parsedPokemonTeam).flat();
 
                 setPokemonList(arrayOfPokemonData);
+                setTeamCount(arrayOfPokemonData.length);
             }
         } catch (error) {
             console.error('Erreur lors de la récupération de pokemonTeam depuis AsyncStorage', error);
         }
     };
 
+    const refreshPage = () => {
+        getPokemonTeam();
+    };
+
     return (
         <View>
             <View style={styles.title_container}>
-                <Text style={styles.title}>Your Team</Text>
+                <Text style={styles.title}>Your Team ({teamCount}/6)</Text>
             </View>
-            <FlatList
-                data={pokemonList}
-                keyExtractor={(item, index) => index.toString()}
-                numColumns={2}
-                renderItem={({ item }) => {
-                    return item.height ? (
-                        <View>
+            <View style={styles.list_container}>
+                <FlatList
+                    data={pokemonList}
+                    keyExtractor={(item, index) => index.toString()}
+                    numColumns={2}
+                    styles={styles.list}
+                    columnWrapperStyle={styles.list_wrapper}
+                    renderItem={({ item }) => {
+                        return item.height ? (
                             <PokemonDetails item={item} />
-                        </View>
-                    ) : <Text>taille : {item.height}</Text>;
-                }}
-            />
+                        ) : <Text>taille : {item.height}</Text>;
+                    }}
+                />
+            </View>
         </View>
     );
 };
 
 export default PokemonList;
 
-
 const styles = StyleSheet.create({
     title_container: {
-        paddingTop: 100,
+        paddingTop: 65,
     },
     title: {
         fontSize: 35,
         textAlign: 'center',
         fontWeight: 'bold',
         marginBottom: 20
-    }
+    },
+    list_container: {
+        marginLeft: 20,
+        marginRight: 20,
+    },
+    list: {
+        marginBottom: 100,
+        height: '100%',
+    },
+    list_wrapper: {
+        justifyContent: 'space-between',
+    },
 });

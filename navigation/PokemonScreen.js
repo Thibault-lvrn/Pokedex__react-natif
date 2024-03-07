@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, Text } from "react-native";
 import axios from "axios";
 import PokemonDetails from "../components/PokemonDetails";
 
@@ -22,7 +22,7 @@ export default function PokemonList(navigation) {
                     });
 
                     setNextPage(response.data.next);
-                    setIsLoaded(true);
+                    // setIsLoaded(true);
                 } catch (error) {
                     console.error(error);
                 }
@@ -39,7 +39,9 @@ export default function PokemonList(navigation) {
                 columnWrapperStyle={styles.list_wrapper}
                 data={pokemon}
                 numColumns={2}
-                onEndReached={() => getpokemon(nextPage)}
+                onEndReached={() => {
+                    getpokemon(nextPage)}
+                }
                 onEndReachedThreshold={0.5}
                 renderItem={({ item }) => (
                     <PokemonDetails navigation={navigation} item={item} />

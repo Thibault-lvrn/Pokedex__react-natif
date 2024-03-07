@@ -1,9 +1,10 @@
 import * as React from 'react';
 import PokemonScreen from './navigation/PokemonScreen';
 import PokemonInfo from './components/PokemonInfo';
-import DetailScreen from './navigation/DetailScreen';
+import CameraScreen from './navigation/CameraScreen';
 import SearchScreen from './navigation/SearchScreen';
 import PokemonTeam from './components/PokemonTeam';
+import ParameterScreen from './navigation/ParameterScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -11,14 +12,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
-function HomeStackNavigation() {
-    return (
-        <Stack.Navigator>
-            <Stack.Screen name="Details" component={DetailScreen} />
-        </Stack.Navigator>
-    );
-}
 
 function PokemonStackNavigation() {
     return (
@@ -66,7 +59,7 @@ export default function App() {
                 name="Search" 
                 component={SearchScreen}
                 options={{
-                    tabBarLabel: 'Search Pokemon',
+                    tabBarLabel: 'Search',
                     tabBarIcon: ({ color }) => (
                     <MaterialCommunityIcons name="magnify" color={color} size={26} />
                     ),
@@ -84,8 +77,18 @@ export default function App() {
                 }} 
                 />
                 <Tab.Screen
+                name="Photo"
+                component={CameraScreen}
+                options={{
+                    tabBarLabel: 'Camera',
+                    tabBarIcon: ({ color }) => (
+                    <MaterialCommunityIcons name="camera" color={color} size={26} />
+                    ),
+                }}
+                />
+                <Tab.Screen
                 name="Parameters"
-                component={HomeStackNavigation}
+                component={ParameterScreen}
                 options={{
                     tabBarLabel: 'Parameters',
                     tabBarIcon: ({ color }) => (

@@ -10,28 +10,16 @@ export default function HomeScreen({ navigation }) {
     const [hasCameraPermission, setHasCameraPermission] = useState(null);
     const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
     const [image, setImage] = useState(null);
+    const [cameraRef, setCameraRef] = useState(null);
 
     useEffect(() => {
         (async () => {
             const cameraStatus = await Camera.requestCameraPermissionsAsync();
             setHasCameraPermission(cameraStatus.status === 'granted');
-
-            const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
-            setHasGalleryPermission(galleryStatus.status === 'granted');
         })();
     }, []);
 
-    useFocusEffect(
-        React.useCallback(() => {
-            (async () => {
-                const cameraStatus = await Camera.requestCameraPermissionsAsync();
-                setHasCameraPermission(cameraStatus.status === 'granted');
-    
-                const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
-                setHasGalleryPermission(galleryStatus.status === 'granted');
-            })();
-        }, [])
-    );
+
 
     const takePicture = async () => {
         if (cameraRef) {
@@ -41,6 +29,11 @@ export default function HomeScreen({ navigation }) {
     };
 
     const pickImage = async () => {
+        const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (galleryStatus.status !== 'granted') {
+            return;
+        }
+
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
@@ -54,7 +47,7 @@ export default function HomeScreen({ navigation }) {
     };
 
     function toggleCameraType() {
-        setType(current => (current === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back)); // Modification ici
+        setType(current => (current === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back));
     }
 
     const deleteImage = () => {
@@ -75,7 +68,7 @@ export default function HomeScreen({ navigation }) {
                     style={styles.cameraPreview}
                     type={type}
                     ref={(ref) => {
-                        cameraRef = ref;
+                        setCameraRef(ref);
                     }}
                 >
                     <View style={styles.cameraButtonsContainer}>

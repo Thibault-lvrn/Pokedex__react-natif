@@ -6,26 +6,21 @@ import PokemonDetails from "../components/PokemonDetails";
 export default function PokemonList(navigation) {
     const [pokemon, setPokemon] = useState([]);
     const [nextPage, setNextPage] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(true);
     const url = "https://pokeapi.co/api/v2/pokemon?limit=16";
 
     useEffect(() => {
         getpokemon = async (url) => {
-            if (isLoaded) {
-                setIsLoaded(false);
-                try {
-                    const response = await axios.get(url);
+            try {
+                const response = await axios.get(url);
 
-                    setPokemon((prevPokemon) => {
-                        const updatedPokemon = [...prevPokemon, ...response.data.results];
-                        return updatedPokemon;
-                    });
+                setPokemon((prevPokemon) => {
+                    const updatedPokemon = [...prevPokemon, ...response.data.results];
+                    return updatedPokemon;
+                });
 
-                    setNextPage(response.data.next);
-                    // setIsLoaded(true);
-                } catch (error) {
-                    console.error(error);
-                }
+                setNextPage(response.data.next);
+            } catch (error) {
+                console.error(error);
             }
         };
 
@@ -42,11 +37,11 @@ export default function PokemonList(navigation) {
                 onEndReached={() => {
                     getpokemon(nextPage)}
                 }
-                onEndReachedThreshold={0.5}
+                onEndReachedThreshold={0.1}
                 renderItem={({ item }) => (
                     <PokemonDetails navigation={navigation} item={item} />
                 )}
-                keyExtractor={(item) => item.name}
+                keyExtractor={(item, index) => item.name + index}
             />
         </View>
     );

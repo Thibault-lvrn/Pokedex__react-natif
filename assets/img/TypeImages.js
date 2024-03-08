@@ -25,7 +25,7 @@ const images = {
     dragon: '#7138F8',
     electric: '#F9D030',
     fairy: '#F58ABE',
-    fight: '#B92720',
+    fighting: '#B92720',
     fire: '#EF7528',
     flying: '#A087EE',
     ghost: '#654E8E',

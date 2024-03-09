@@ -67,8 +67,10 @@ export default function PokemonList({ route }) {
 
                     <View style={styles.text_container}>
                         <View style={styles.name_container}>
-                            <Text style={styles.text}>{PokemonDetails.name}</Text>
-                            <StarButton pokemonData={PokemonDetails} />
+                            <Text style={styles.title}>{PokemonDetails.name}</Text>
+                            <View style={styles.starButton}>
+                                <StarButton pokemonData={PokemonDetails} />
+                            </View>
                         </View>
 
                         <View style={styles.list}>
@@ -125,7 +127,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         height: '50%',
-        paddingLeft: 24,
     },
     image: {
         height: '58%',
@@ -138,53 +139,54 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'flex-start',
         width: '100%',
-        paddingLeft: 24,
+        textAlign: 'center',
+        marginTop: -100,
     },
-    text: {
+    title: {
         fontSize: 30,
         textAlign: "center",
         color: 'black',
-        textTransform: 'uppercase',
+        fontWeight: "bold",
         height: 50,
         display: 'flex',
+        textTransform: 'capitalize',
         alignItems: 'center',
     },
     name_container: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         padding: 10,
         width: '100%',
         alignItems: 'flex-end',
     },
+    starButton: {
+        position: 'absolute',
+        right: 10,
+        top: -75,
+    },  
     typeImage: {
         height: 50,
         width: 50,
         objectFit: 'contain',
         margin: 5,
     },
-    typeObject: {
-        fontSize: 20,
-        textAlign: "center",
-        display: 'flex',
-        color: 'white',
-        letterSpacing: 1,
-        borderRadius: 50,
-        paddingTop: 6,
-        paddingBottom: 0,
-        paddingLeft: 8,
-        paddingRight: 8,
-        textTransform: 'uppercase',
-        borderWidth: 4,
-        borderColor: 'white',
-        margin: 5
-    },
     list: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'left',
+        justifyContent: 'center',
         width: '100%',
         alignItems: 'center',
+    },
+    typeObject: {
+        fontSize: 20,
+        textAlign: "center",
+        color: 'white',
+        borderRadius: 10,
+        textTransform: 'uppercase',
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        margin: 5,
     },
     info_container: {
         display: 'flex',

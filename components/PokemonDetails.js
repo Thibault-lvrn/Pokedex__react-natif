@@ -138,11 +138,10 @@ const styles = StyleSheet.create({
     },
     typeObject: {
         textAlign: "center",
-        display: 'flex',
         color: 'white',
-        borderRadius: 50,
+        borderRadius: 10,
         paddingTop: 2,
-        paddingBottom: 2,
+        paddingBottom: 3,
         paddingLeft: 9,
         paddingRight: 9
     },
